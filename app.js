@@ -1,6 +1,6 @@
 
 import RandomNum from "./RandomNum.js"; // Importando classe
-let randomNum = new RandomNum(1, 2);
+let randomNum = new RandomNum(1, 30);
 let numSort = randomNum.getNumRandom();
 exibirMensagemInicial();
 let tentativas = parseInt(1);
