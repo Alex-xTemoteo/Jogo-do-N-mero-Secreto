@@ -1,17 +1,19 @@
 
 import RandomNum from "./RandomNum.js"; // Importando classe
 let randomNum = new RandomNum(1, 30);
+let minimo = randomNum.getMin();
+let maximo = randomNum.getMax();
 let numSort = randomNum.getNumRandom();
 exibirMensagemInicial();
 let tentativas = parseInt(1);
 
 function verificarChute(){
     let chute = parseInt(document.querySelector('input').value);
-    if(chute >= 1 && chute <= 10){
+    if(chute >= minimo && chute <= maximo){
         if(chute == numSort){
             exibirTextoNaTela('h1','Parabéns! Você acertou o número secreto.');
-            let msg = (tentativas > 1)? `Você descobriu com ${tentativas} tentativas.`: `Você descobriu com ${tentativas} tentativa.`;
-            exibirTextoNaTela('p', `Congratulations!! ${msg}`);
+            let msg = (tentativas > 1)? `Foi descoberto com ${tentativas} tentativas.`: `Foi descoberto com uma tentativa.`;
+            exibirTextoNaTela('p', `${msg}`);
             window.document.getElementById('bt_chute').setAttribute('disabled', false);
             document.getElementById('reiniciar').removeAttribute('disabled');
         }else if(chute > numSort)
@@ -22,19 +24,28 @@ function verificarChute(){
         tentativas += 1;
         limparCampo();
     }else{
-        exibirTextoNaTela('p', 'Por gentileza, escolha um número de 1 a 10.');
-    } 
+        exibirTextoNaTela('p', `Por gentileza, escolha um número ${minimo} de  a ${maximo}.`);
+    };
 };
 
 function exibirMensagemInicial(){
     exibirTextoNaTela('h1', 'Jogo do número secreto');
-    exibirTextoNaTela('p', 'Escolha um número de 1 a 10');
+    exibirTextoNaTela('p', `Escolha um número de ${minimo} a ${maximo}`);
 };
 
 function exibirTextoNaTela(tag, texto){
     let elemento = document.querySelector(tag);
     elemento.innerHTML = texto;
-    responsiveVoice.speak(texto, 'Brazilian Portuguese Female', {rate:1.2}); // cmd para ler um texto | rate é velocidade da voz 
+    
+    // Verifica se o navegador suporta e adiciona um narrador de texto se verdadeiro
+    if ('speechSynthesis' in window) {
+        let utterance = new SpeechSynthesisUtterance(texto);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 1.2;
+        window.speechSynthesis.speak(utterance);
+    } else {
+        console.log("Web Speech API não suportada neste navegador.");
+    }
 };
 function limparCampo(){
     document.querySelector('input').value = '';
