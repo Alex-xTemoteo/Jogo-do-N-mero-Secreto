@@ -5,9 +5,6 @@ export default class RandomNum{
         this.numRandom = parseInt(Math.random() * ((this.max + 1)- this.min) + min);
         this.elementosSort = [this.numRandom];
     };
-    setElementosSort(num){
-        this.elementosSort.push(num); 
-    };
     getNumRandom(){
         return this.numRandom;
     };
@@ -18,17 +15,13 @@ export default class RandomNum{
         this.setElementosSort(this.numRandom);
         return this.numRandom;
     };
+    setElementosSort(num){
+        this.elementosSort.push(num); 
+    };
     getElementosSort(){
         console.log(this.elementosSort)
         if(this.elementosSort.length != 0){
             return this.elementosSort;
-        }
+        };
     };
-    getMin(){
-        return this.min;
-    };
-
-    getMax(){
-        return this.max;
-    }
 };
